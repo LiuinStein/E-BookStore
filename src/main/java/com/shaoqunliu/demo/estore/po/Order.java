@@ -1,8 +1,12 @@
 package com.shaoqunliu.demo.estore.po;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Date;
 
+@Entity
 public class Order {
+    @Id
     private Long id;
 
     private Long total;

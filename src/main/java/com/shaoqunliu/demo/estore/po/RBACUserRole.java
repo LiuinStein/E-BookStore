@@ -1,6 +1,11 @@
 package com.shaoqunliu.demo.estore.po;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class RBACUserRole {
+    @Id
     private Integer id;
 
     private Long userId;
