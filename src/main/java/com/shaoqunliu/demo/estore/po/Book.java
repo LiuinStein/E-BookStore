@@ -1,11 +1,12 @@
 package com.shaoqunliu.demo.estore.po;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "t_book_info")
 public class Book {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -14,9 +15,9 @@ public class Book {
 
     private Long remain;
 
-    private String img;
+    private String img = "";
 
-    private String description;
+    private String description = "";
 
     public Long getId() {
         return id;
@@ -39,7 +40,7 @@ public class Book {
     }
 
     public void setPrice(Long price) {
-        this.price = price;
+        this.price = price == null ? 0 : price;
     }
 
     public Long getRemain() {
@@ -47,7 +48,7 @@ public class Book {
     }
 
     public void setRemain(Long remain) {
-        this.remain = remain;
+        this.remain = remain == null ? 0 : remain;
     }
 
     public String getImg() {
@@ -55,7 +56,7 @@ public class Book {
     }
 
     public void setImg(String img) {
-        this.img = img == null ? null : img.trim();
+        this.img = img == null ? "" : img.trim();
     }
 
     public String getDescription() {
@@ -63,6 +64,6 @@ public class Book {
     }
 
     public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
+        this.description = description == null ? "" : description.trim();
     }
 }
