@@ -4,5 +4,7 @@ import com.shaoqunliu.demo.estore.po.Book;
 
 public interface BookService {
 
-    void addBook(Book book);
+    boolean addBook(Book book);
+
+    boolean modifyBook(Book book);
 }

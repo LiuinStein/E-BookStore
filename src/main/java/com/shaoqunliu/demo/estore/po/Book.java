@@ -1,6 +1,13 @@
 package com.shaoqunliu.demo.estore.po;
 
+import com.shaoqunliu.demo.estore.validation.groups.AddBook;
+import com.shaoqunliu.demo.estore.validation.groups.ModifyBook;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "t_book_info")
@@ -9,14 +16,35 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(groups = {
+            AddBook.class
+    })
     private String name;
 
+    @NotNull(groups = {
+            AddBook.class
+    })
+    @PositiveOrZero(groups = {
+            AddBook.class, ModifyBook.class
+    })
     private Long price;
 
+    @NotNull(groups = {
+            AddBook.class
+    })
+    @PositiveOrZero(groups = {
+            AddBook.class, ModifyBook.class
+    })
     private Long remain;
 
+    @Size(max = 255, groups = {
+            AddBook.class, ModifyBook.class
+    })
     private String img = "";
 
+    @Size(max = 255, groups = {
+            AddBook.class, ModifyBook.class
+    })
     private String description = "";
 
     public Long getId() {
