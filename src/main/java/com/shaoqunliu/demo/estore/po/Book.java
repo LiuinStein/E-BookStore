@@ -1,11 +1,11 @@
 package com.shaoqunliu.demo.estore.po;
 
-import com.shaoqunliu.demo.estore.validation.groups.AddBook;
-import com.shaoqunliu.demo.estore.validation.groups.ModifyBook;
+import com.shaoqunliu.demo.estore.validation.groups.book.AddBook;
+import com.shaoqunliu.demo.estore.validation.groups.book.DeleteBook;
+import com.shaoqunliu.demo.estore.validation.groups.book.ModifyBook;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
@@ -14,6 +14,9 @@ import javax.validation.constraints.Size;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull(groups = {
+            DeleteBook.class
+    })
     private Long id;
 
     @NotNull(groups = {

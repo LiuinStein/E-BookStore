@@ -5,7 +5,6 @@ import com.shaoqunliu.demo.estore.repository.BookRepository;
 import com.shaoqunliu.demo.estore.service.BookService;
 import com.shaoqunliu.jpa.util.ObjectCopyingUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -36,5 +35,10 @@ public class MyBookService implements BookService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void deleteBook(Book book) {
+        bookRepository.deleteById(book.getId());
     }
 }

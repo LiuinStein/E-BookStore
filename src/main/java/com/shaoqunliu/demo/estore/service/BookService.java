@@ -7,4 +7,6 @@ public interface BookService {
     boolean addBook(Book book);
 
     boolean modifyBook(Book book);
+
+    void deleteBook(Book book);
 }
