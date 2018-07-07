@@ -10,7 +10,9 @@ import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/book")
@@ -45,5 +47,25 @@ public class BookController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBook(@RequestBody @Validated Book book) {
         bookService.deleteBook(book);
+    }
+
+    @RequestMapping(value = "", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @ResponseStatus(HttpStatus.OK)
+    public RestfulResult findBook(@RequestParam("mode") String mode, @RequestParam("condition") String condition, HttpServletResponse response) {
+        List<Book> books;
+        switch (mode) {
+            case "id":
+                books = bookService.findBookById(Long.parseLong(condition));
+                break;
+            case "name":
+                books = bookService.findBookByName(condition);
+                break;
+            default:
+                response.setStatus(400);
+                return new RestfulResult(400, "No query mode named " + mode, new HashMap<>());
+        }
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("books", books);
+        return new RestfulResult(0, "", result);
     }
 }

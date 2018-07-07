@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service("myBookService")
@@ -38,7 +40,21 @@ public class MyBookService implements BookService {
     }
 
     @Override
+    @Transactional
     public void deleteBook(Book book) {
         bookRepository.deleteById(book.getId());
+    }
+
+    @Override
+    public List<Book> findBookById(Long id) {
+        Optional<Book> book = bookRepository.findById(id);
+        ArrayList<Book> ret = new ArrayList<>();
+        book.ifPresent(ret::add);
+        return ret;
+    }
+
+    @Override
+    public List<Book> findBookByName(String name) {
+        return bookRepository.findByNameContaining(name);
     }
 }
