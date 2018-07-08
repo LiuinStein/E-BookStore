@@ -1,6 +1,7 @@
 package com.shaoqunliu.demo.estore.po;
 
 import com.shaoqunliu.demo.estore.validation.groups.user.AddUserInfo;
+import com.shaoqunliu.demo.estore.validation.groups.user.ModifyUserInfo;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -10,6 +11,9 @@ import javax.validation.constraints.*;
 public class PersonalInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull(groups = {
+            ModifyUserInfo.class
+    })
     private Long id;
 
     @Size(max = 30)
