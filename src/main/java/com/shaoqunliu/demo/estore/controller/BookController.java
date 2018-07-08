@@ -13,6 +13,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -53,18 +55,18 @@ public class BookController {
 
     @RequestMapping(value = "", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.OK)
-    public RestfulResult findBook(@RequestParam("mode") String mode, @RequestParam("condition") String condition, HttpServletResponse response) {
-        List<Book> books;
-        switch (mode) {
+    public RestfulResult findBook(@RequestParam("condition") String condition, @RequestParam("value") String value, HttpServletResponse response) throws IOException {
+        List<Book> books = new ArrayList<>();
+        switch (condition) {
             case "id":
-                books = bookService.findBookById(Long.parseLong(condition));
+                books = bookService.findBookById(Long.parseLong(value));
                 break;
             case "name":
-                books = bookService.findBookByName(condition);
+                books = bookService.findBookByName(value);
                 break;
             default:
-                response.setStatus(400);
-                return new RestfulResult(400, "No query mode named " + mode, new HashMap<>());
+                response.sendError(HttpStatus.BAD_REQUEST.value(), "No query mode named " + value);
+                break;
         }
         HashMap<String, Object> result = new HashMap<>();
         result.put("books", books);
