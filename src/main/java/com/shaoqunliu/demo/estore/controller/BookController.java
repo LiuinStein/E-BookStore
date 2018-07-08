@@ -3,6 +3,8 @@ package com.shaoqunliu.demo.estore.controller;
 import com.shaoqunliu.demo.estore.po.Book;
 import com.shaoqunliu.demo.estore.service.BookService;
 import com.shaoqunliu.demo.estore.validation.groups.book.AddBook;
+import com.shaoqunliu.demo.estore.validation.groups.book.DeleteBook;
+import com.shaoqunliu.demo.estore.validation.groups.book.ModifyBook;
 import com.shaoqunliu.demo.estore.vo.RestfulResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +38,7 @@ public class BookController {
 
     @RequestMapping(value = "/", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public RestfulResult modifyBook(@RequestBody @Validated Book book) {
+    public RestfulResult modifyBook(@RequestBody @Validated({ModifyBook.class}) Book book) {
         if (bookService.modifyBook(book)) {
             return new RestfulResult(0, "", new HashMap<>());
         }
@@ -45,7 +47,7 @@ public class BookController {
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteBook(@RequestBody @Validated Book book) {
+    public void deleteBook(@RequestBody @Validated({DeleteBook.class}) Book book) {
         bookService.deleteBook(book);
     }
 

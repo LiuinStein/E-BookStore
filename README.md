@@ -1,6 +1,6 @@
 # E-Store online book market
 
-This is the server-side program of E-Store online book market. It is a practical Java Web application during the mother-fucking college-organized Java EE exercising. 
+This is the server-side program of E-Store online book market. It is a practical Java Web application during the mother-fucking college-organized Java EE training. 
 
 Related technologies:
 
