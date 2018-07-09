@@ -2,7 +2,6 @@ package com.shaoqunliu.demo.estore.controller;
 
 import com.shaoqunliu.demo.estore.po.PersonalInfo;
 import com.shaoqunliu.demo.estore.service.UserInfoService;
-import com.shaoqunliu.demo.estore.validation.groups.user.AddUserInfo;
 import com.shaoqunliu.demo.estore.validation.groups.user.ModifyUserInfo;
 import com.shaoqunliu.demo.estore.vo.RestfulResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +11,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 import java.io.IOException;
 import java.util.*;
 
