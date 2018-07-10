@@ -2,6 +2,7 @@ package com.shaoqunliu.demo.estore.po;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.shaoqunliu.demo.estore.validation.groups.user.AddUser;
+import com.shaoqunliu.demo.estore.validation.groups.user.ModifyUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -19,13 +20,18 @@ public class RBACUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JSONField(alternateNames = "user_id")
+    @NotNull(groups = {
+            ModifyUser.class
+    })
     private Long id;
 
     @Size(min = 6, max = 24, groups = {
-            AddUser.class
+            AddUser.class,
+            ModifyUser.class
     })
     @NotNull(groups = {
-            AddUser.class
+            AddUser.class,
+            ModifyUser.class
     })
     private String password;
 

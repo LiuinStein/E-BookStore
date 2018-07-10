@@ -55,4 +55,18 @@ public class MyUserService implements UserService {
         userRoleRepository.save(userRole);
         return user1.getId();
     }
+
+    @Override
+    public boolean modifyUser(RBACUser user, String oldPassword) {
+        Optional<RBACUser> dummy = userRepository.findById(user.getId());
+        if (dummy.isPresent()) {
+            if (!encoder.matches(oldPassword, dummy.get().getPassword())) {
+                return false;
+            }
+            user.setPassword(encoder.encode(user.getPassword()));
+            user.setEnabled(true);
+            return userRepository.save(user).getId() != null;
+        }
+        return false;
+    }
 }

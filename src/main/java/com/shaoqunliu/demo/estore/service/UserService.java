@@ -8,4 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface UserService extends UserDetailsService {
 
     Long addUser(RBACUser user, PersonalInfo info, RBACRole role);
+
+    boolean modifyUser(RBACUser user, String oldPassword);
 }
