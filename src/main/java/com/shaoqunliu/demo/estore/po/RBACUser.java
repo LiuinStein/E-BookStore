@@ -1,6 +1,7 @@
 package com.shaoqunliu.demo.estore.po;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.google.gson.GsonBuilder;
 import com.shaoqunliu.demo.estore.validation.groups.user.AddUser;
 import com.shaoqunliu.demo.estore.validation.groups.user.ModifyUser;
 import org.springframework.security.core.GrantedAuthority;
@@ -93,5 +94,10 @@ public class RBACUser implements UserDetails {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+
+    @Override
+    public String toString() {
+        return new GsonBuilder().enableComplexMapKeySerialization().create().toJson(this);
     }
 }

@@ -1,20 +1,27 @@
 package com.shaoqunliu.demo.estore.po;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "t_order")
 public class Order {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @PositiveOrZero
     private Long total;
 
+    @Size(max = 255)
     private String address;
 
+    @FutureOrPresent
     private Date time;
 
+    @Min(0) @Max(1)
     private Byte state;
 
     private Long payer;

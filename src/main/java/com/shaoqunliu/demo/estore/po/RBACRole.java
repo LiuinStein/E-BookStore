@@ -42,4 +42,9 @@ public class RBACRole implements GrantedAuthority {
     public String getAuthority() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

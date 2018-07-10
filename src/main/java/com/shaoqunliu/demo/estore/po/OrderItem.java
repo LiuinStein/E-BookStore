@@ -1,19 +1,36 @@
 package com.shaoqunliu.demo.estore.po;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.shaoqunliu.demo.estore.validation.groups.cart.AddShoppingCart;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
 @Entity
+@Table(name = "t_order_item")
 public class OrderItem {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long orderId;
 
+    @NotNull(groups = {
+            AddShoppingCart.class
+    })
     private Long itemId;
 
+    @PositiveOrZero
+    @NotNull(groups = {
+            AddShoppingCart.class
+    })
     private Integer quantity;
 
+    @PositiveOrZero
+    @NotNull(groups = {
+            AddShoppingCart.class
+    })
     private Long price;
 
     public Long getId() {

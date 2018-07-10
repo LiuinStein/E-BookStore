@@ -59,7 +59,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         String token = Jwts.builder()
-                .setSubject(((UserDetails) authResult.getPrincipal()).getUsername())
+                .setSubject(authResult.getPrincipal().toString())
                 .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 24 * 1000))
                 .signWith(SignatureAlgorithm.HS512, "fuck yeah!")
                 .compact();
