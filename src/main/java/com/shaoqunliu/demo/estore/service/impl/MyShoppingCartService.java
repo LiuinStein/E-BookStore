@@ -10,8 +10,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 @Service("myShoppingCartService")
 public class MyShoppingCartService implements ShoppingCartService {
@@ -35,7 +35,7 @@ public class MyShoppingCartService implements ShoppingCartService {
             cart = new RedisShoppingCart();
             cart.setId(Long.parseLong(uid));
             cart.setOrderItems(new ArrayList<>());
-            shoppingCartValueOperations.set(uid, cart);
+            shoppingCartValueOperations.set(uid, cart, 3, TimeUnit.DAYS);
         }
         return cart;
     }
@@ -66,5 +66,10 @@ public class MyShoppingCartService implements ShoppingCartService {
             }
         }
         shoppingCartValueOperations.set(getCurrentUserId(), cart, 3, TimeUnit.DAYS);
+    }
+
+    @Override
+    public List<OrderItem> findAllShoppingCartItems() {
+        return getCurrentShoppingCart().getOrderItems();
     }
 }

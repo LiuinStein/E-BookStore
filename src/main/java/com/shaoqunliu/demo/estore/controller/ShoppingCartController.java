@@ -1,22 +1,17 @@
 package com.shaoqunliu.demo.estore.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.shaoqunliu.demo.estore.po.OrderItem;
-import com.shaoqunliu.demo.estore.po.RedisShoppingCart;
 import com.shaoqunliu.demo.estore.service.ShoppingCartService;
 import com.shaoqunliu.demo.estore.validation.groups.cart.AddShoppingCart;
 import com.shaoqunliu.demo.estore.vo.RestfulResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/v1/cart")
@@ -41,5 +36,14 @@ public class ShoppingCartController {
     public RestfulResult modifyShoppingCartItem(@RequestBody @Validated({AddShoppingCart.class}) OrderItem item) {
         shoppingCartService.modifyShoppingCartItem(item);
         return new RestfulResult(0, "Shopping cart has been successfully modified", new HashMap<>());
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @ResponseStatus(HttpStatus.OK)
+    public RestfulResult findAllShoppingCartItems() {
+        List<OrderItem> items = shoppingCartService.findAllShoppingCartItems();
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("items", items);
+        return new RestfulResult(0, "", result);
     }
 }
