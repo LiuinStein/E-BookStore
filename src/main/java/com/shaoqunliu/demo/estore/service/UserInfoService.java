@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface UserInfoService {
 
-    boolean addUserInfo(PersonalInfo personalInfo);
-
     void deleteUserInfo(Long id);
 
     boolean modifyUserInfo(PersonalInfo personalInfo);

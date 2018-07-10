@@ -1,11 +1,13 @@
 package com.shaoqunliu.demo.estore.po;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "t_rbac_user_role")
 public class RBACUserRole {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private Long userId;

@@ -23,17 +23,14 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
+    private final BCryptPasswordEncoder encoder;
     private final PermissionService permissionService;
 
     @Autowired
-    public SpringSecurityConfiguration(UserService userService, PermissionService permissionService) {
+    public SpringSecurityConfiguration(UserService userService, BCryptPasswordEncoder encoder, PermissionService permissionService) {
         this.userService = userService;
+        this.encoder = encoder;
         this.permissionService = permissionService;
-    }
-
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder(11);
     }
 
     @Bean
@@ -68,6 +65,6 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService)
-                .passwordEncoder(bCryptPasswordEncoder());
+                .passwordEncoder(encoder);
     }
 }

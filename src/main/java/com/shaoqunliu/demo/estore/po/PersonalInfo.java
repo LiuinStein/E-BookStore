@@ -1,6 +1,7 @@
 package com.shaoqunliu.demo.estore.po;
 
-import com.shaoqunliu.demo.estore.validation.groups.user.AddUserInfo;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.shaoqunliu.demo.estore.validation.groups.user.AddUser;
 import com.shaoqunliu.demo.estore.validation.groups.user.ModifyUserInfo;
 
 import javax.persistence.*;
@@ -9,8 +10,8 @@ import javax.validation.constraints.*;
 @Entity
 @Table(name = "t_personal_info")
 public class PersonalInfo {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull(groups = {
             ModifyUserInfo.class
     })
@@ -18,27 +19,27 @@ public class PersonalInfo {
 
     @Size(max = 30)
     @NotNull(groups = {
-            AddUserInfo.class
+            AddUser.class
     })
     private String name;
 
     @Min(0) @Max(1)
     @NotNull(groups = {
-            AddUserInfo.class
+            AddUser.class
     })
     private Byte gender;
 
     @Email
     @Size(max = 30)
     @NotNull(groups = {
-            AddUserInfo.class
+            AddUser.class
     })
     private String email;
 
     @Size(max = 20)
     @Pattern(regexp = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{4}[\\s.-]?\\d{4}$")
     @NotNull(groups = {
-            AddUserInfo.class
+            AddUser.class
     })
     private String phone;
 

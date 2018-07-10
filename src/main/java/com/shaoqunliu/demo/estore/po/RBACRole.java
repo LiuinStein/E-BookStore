@@ -1,8 +1,11 @@
 package com.shaoqunliu.demo.estore.po;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.shaoqunliu.demo.estore.validation.groups.user.AddUser;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -10,6 +13,10 @@ import javax.validation.constraints.Size;
 public class RBACRole implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull(groups = {
+            AddUser.class
+    })
+    @JSONField(alternateNames = "role_id")
     private Byte id;
 
     @Size(max = 20)

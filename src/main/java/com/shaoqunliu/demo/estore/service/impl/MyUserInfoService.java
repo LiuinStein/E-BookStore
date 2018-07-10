@@ -24,12 +24,6 @@ public class MyUserInfoService implements UserInfoService {
 
     @Override
     @Transactional
-    public boolean addUserInfo(PersonalInfo personalInfo) {
-        return userInfoRepository.save(personalInfo).getId() != null;
-    }
-
-    @Override
-    @Transactional
     public void deleteUserInfo(Long id) {
         userInfoRepository.deleteById(id);
     }

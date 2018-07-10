@@ -1,10 +1,13 @@
 package com.shaoqunliu.demo.estore.po;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.shaoqunliu.demo.estore.validation.groups.user.AddUser;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -12,19 +15,27 @@ import java.util.List;
 @Entity
 @Table(name = "t_rbac_user")
 public class RBACUser implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JSONField(alternateNames = "user_id")
     private Long id;
 
+    @Size(min = 6, max = 24, groups = {
+            AddUser.class
+    })
+    @NotNull(groups = {
+            AddUser.class
+    })
     private String password;
 
-    private Boolean enabled;
+    private Boolean enabled = true;
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(name = "t_rbac_user_role", joinColumns = {
-            @JoinColumn(name = "user_id", referencedColumnName = "id")
+            @JoinColumn(name = "userId", referencedColumnName = "id")
     }, inverseJoinColumns = {
-            @JoinColumn(name = "role_id", referencedColumnName = "id")
+            @JoinColumn(name = "roleId", referencedColumnName = "id")
     })
     private List<RBACRole> authorities = new ArrayList<>();
 

@@ -1,4 +1,4 @@
 package com.shaoqunliu.demo.estore.validation.groups.user;
 
-public interface AddUserInfo {
+public interface AddUser {
 }
