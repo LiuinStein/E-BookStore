@@ -1,8 +1,12 @@
 package com.shaoqunliu.demo.estore.po;
 
+import com.shaoqunliu.demo.estore.validation.groups.order.SubmitOrder;
+
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "t_order")
@@ -16,15 +20,28 @@ public class Order {
     private Long total;
 
     @Size(max = 255)
+    @NotNull(groups = {
+            SubmitOrder.class
+    })
     private String address;
 
-    @FutureOrPresent
     private Date time;
 
-    @Min(0) @Max(1)
+    @Min(0)
+    @Max(1)
     private Byte state;
 
     private Long payer;
+
+    @NotNull(groups = {
+            SubmitOrder.class
+    })
+    @NotEmpty(groups = {
+            SubmitOrder.class
+    })
+    @Valid
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    private List<OrderItem> items;
 
     public Long getId() {
         return id;
@@ -72,5 +89,13 @@ public class Order {
 
     public void setPayer(Long payer) {
         this.payer = payer;
+    }
+
+    public List<OrderItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
     }
 }

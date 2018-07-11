@@ -69,6 +69,19 @@ public class MyShoppingCartService implements ShoppingCartService {
     }
 
     @Override
+    public void clearShoppingCartItems(List<OrderItem> items) {
+        RedisShoppingCart cart = getCurrentShoppingCart();
+        items.forEach(x -> {
+            for (int i = 0; i < cart.getOrderItems().size(); i++) {
+                if (x.getItemId().equals(cart.getOrderItems().get(i).getItemId())) {
+                    cart.getOrderItems().remove(i);
+                }
+            }
+        });
+        shoppingCartValueOperations.set(getCurrentUserId(), cart, 3, TimeUnit.DAYS);
+    }
+
+    @Override
     public List<OrderItem> findAllShoppingCartItems() {
         return getCurrentShoppingCart().getOrderItems();
     }

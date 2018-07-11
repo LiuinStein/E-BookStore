@@ -10,5 +10,7 @@ public interface ShoppingCartService {
 
     void modifyShoppingCartItem(OrderItem item);
 
+    void clearShoppingCartItems(List<OrderItem> items);
+
     List<OrderItem> findAllShoppingCartItems();
 }

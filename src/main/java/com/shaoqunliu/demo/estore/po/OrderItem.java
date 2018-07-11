@@ -4,6 +4,7 @@ import com.shaoqunliu.demo.estore.validation.groups.cart.AddShoppingCart;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
 @Entity
@@ -21,7 +22,7 @@ public class OrderItem {
     })
     private Long itemId;
 
-    @PositiveOrZero
+    @Positive
     @NotNull(groups = {
             AddShoppingCart.class
     })
