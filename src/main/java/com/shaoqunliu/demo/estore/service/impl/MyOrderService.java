@@ -56,6 +56,11 @@ public class MyOrderService implements OrderService {
     }
 
     @Override
+    public void deleteOrder(Long id) {
+        orderRepository.deleteById(id);
+    }
+
+    @Override
     public List<Order> findOrderByPayerId(Long payer) {
         return orderRepository.findByPayer(payer);
     }

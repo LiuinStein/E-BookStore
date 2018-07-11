@@ -1,5 +1,6 @@
 package com.shaoqunliu.demo.estore.po;
 
+import com.shaoqunliu.demo.estore.validation.groups.order.DeleteOrder;
 import com.shaoqunliu.demo.estore.validation.groups.order.SubmitOrder;
 
 import javax.persistence.*;
@@ -14,6 +15,9 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull(groups = {
+            DeleteOrder.class
+    })
     private Long id;
 
     @PositiveOrZero
@@ -41,7 +45,7 @@ public class Order {
     })
     @Valid
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    @JoinColumn(name = "orderId", referencedColumnName = "id")
+    @JoinColumn(name = "orderId", referencedColumnName = "id", insertable = false, updatable = false)
     private List<OrderItem> items;
 
     public Long getId() {

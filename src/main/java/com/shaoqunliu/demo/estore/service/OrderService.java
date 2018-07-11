@@ -8,6 +8,8 @@ public interface OrderService {
 
     void addOrder(Order order);
 
+    void deleteOrder(Long id);
+
     List<Order> findOrderByPayerId(Long payer);
 
     List<Order> findOrderById(Long id);

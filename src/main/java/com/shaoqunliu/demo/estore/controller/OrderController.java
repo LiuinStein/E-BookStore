@@ -3,6 +3,7 @@ package com.shaoqunliu.demo.estore.controller;
 import com.shaoqunliu.demo.estore.po.Order;
 import com.shaoqunliu.demo.estore.service.OrderService;
 import com.shaoqunliu.demo.estore.validation.groups.cart.AddShoppingCart;
+import com.shaoqunliu.demo.estore.validation.groups.order.DeleteOrder;
 import com.shaoqunliu.demo.estore.validation.groups.order.SubmitOrder;
 import com.shaoqunliu.demo.estore.vo.RestfulResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +58,11 @@ public class OrderController {
         HashMap<String, Object> map = new HashMap<>();
         map.put("orders", orders);
         return new RestfulResult(0, "", map);
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteOrder(@RequestBody @Validated({DeleteOrder.class}) Order order) {
+        orderService.deleteOrder(order.getId());
     }
 }
