@@ -23,13 +23,17 @@ public class MyUserInfoService implements UserInfoService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackOn = {
+            Exception.class
+    })
     public void deleteUserInfo(Long id) {
         userInfoRepository.deleteById(id);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackOn = {
+            Exception.class
+    })
     public boolean modifyUserInfo(PersonalInfo personalInfo) {
         Optional<PersonalInfo> info = userInfoRepository.findById(personalInfo.getId());
         if (info.isPresent()) {

@@ -37,7 +37,9 @@ public class MyOrderService implements OrderService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackOn = {
+            Exception.class
+    })
     public void addOrder(Order order) {
         List<OrderItem> items = order.getItems();
         order.setItems(null);
@@ -56,6 +58,9 @@ public class MyOrderService implements OrderService {
     }
 
     @Override
+    @Transactional(rollbackOn = {
+            Exception.class
+    })
     public void deleteOrder(Long id) {
         orderRepository.deleteById(id);
     }

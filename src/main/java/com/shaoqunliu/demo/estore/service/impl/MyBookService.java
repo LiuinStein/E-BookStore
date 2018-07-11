@@ -22,13 +22,17 @@ public class MyBookService implements BookService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackOn = {
+            Exception.class
+    })
     public boolean addBook(Book book) {
         return bookRepository.save(book).getId() != null;
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackOn = {
+            Exception.class
+    })
     public boolean modifyBook(Book book) {
         Optional<Book> book1 = bookRepository.findById(book.getId());
         if (book1.isPresent()) {
@@ -40,7 +44,9 @@ public class MyBookService implements BookService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackOn = {
+            Exception.class
+    })
     public void deleteBook(Book book) {
         bookRepository.deleteById(book.getId());
     }

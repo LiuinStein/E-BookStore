@@ -43,7 +43,9 @@ public class MyUserService implements UserService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackOn = {
+            Exception.class
+    })
     public Long addUser(RBACUser user, PersonalInfo info, RBACRole role) {
         user.setPassword(encoder.encode(user.getPassword()));
         RBACUser user1 = userRepository.save(user);
@@ -57,6 +59,9 @@ public class MyUserService implements UserService {
     }
 
     @Override
+    @Transactional(rollbackOn = {
+            Exception.class
+    })
     public boolean modifyUser(RBACUser user, String oldPassword) {
         Optional<RBACUser> dummy = userRepository.findById(user.getId());
         if (dummy.isPresent()) {

@@ -18,6 +18,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -38,6 +43,25 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new MySecurityMetadataSource(permissionService);
     }
 
+    @Bean
+    public CorsConfiguration corsConfiguration() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedOrigin("*");
+        configuration.setAllowCredentials(true);
+        return configuration;
+    }
+
+    @Bean
+    public UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        Map<String, CorsConfiguration> configurationMap = new HashMap<>();
+        configurationMap.put("/**", corsConfiguration());
+        source.setCorsConfigurations(configurationMap);
+        return source;
+    }
+
     public SecurityFilter securityFilter() {
         SecurityFilter securityFilter = new SecurityFilter();
         securityFilter.setSecurityMetadataSource(mySecurityMetadataSource());
@@ -47,7 +71,9 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
+        http.cors().configurationSource(urlBasedCorsConfigurationSource())
+                .and()
+                .csrf().disable()
                 .httpBasic().authenticationEntryPoint(new MyAuthenticationEntryPoint())
                 .and()
                 .sessionManagement()
