@@ -12,8 +12,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service("myOrderService")
 public class MyOrderService implements OrderService {
@@ -51,5 +53,18 @@ public class MyOrderService implements OrderService {
         items.forEach(x -> x.setOrderId(orderId));
         itemRepository.saveAll(items);
         cartService.clearShoppingCartItems(items);
+    }
+
+    @Override
+    public List<Order> findOrderByPayerId(Long payer) {
+        return orderRepository.findByPayer(payer);
+    }
+
+    @Override
+    public List<Order> findOrderById(Long id) {
+        Optional<Order> order = orderRepository.findById(id);
+        List<Order> result = new ArrayList<>();
+        order.ifPresent(result::add);
+        return result;
     }
 }

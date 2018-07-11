@@ -11,7 +11,10 @@ import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 
 @RestController
@@ -30,5 +33,29 @@ public class OrderController {
     public RestfulResult submitOrder(@RequestBody @Validated({SubmitOrder.class, AddShoppingCart.class}) Order order) {
         orderService.addOrder(order);
         return new RestfulResult(0, "Order has been submitted!", new HashMap<>());
+    }
+
+    @RequestMapping(value = "", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @ResponseStatus(HttpStatus.OK)
+    public RestfulResult findOrder(@RequestParam("condition") String condition, @RequestParam("value") String value, HttpServletResponse response) throws IOException {
+        List<Order> orders;
+        switch (condition) {
+            case "id":
+                orders = orderService.findOrderById(Long.parseLong(value));
+                break;
+            case "payer":
+                orders = orderService.findOrderByPayerId(Long.parseLong(value));
+                break;
+            default:
+                response.sendError(HttpStatus.BAD_REQUEST.value(), "Unsupported query mode");
+                return null;
+        }
+        if (orders.isEmpty()) {
+            response.sendError(HttpStatus.NOT_FOUND.value(), "Order info was not found");
+            return null;
+        }
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("orders", orders);
+        return new RestfulResult(0, "", map);
     }
 }

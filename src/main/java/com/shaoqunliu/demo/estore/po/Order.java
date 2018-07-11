@@ -41,6 +41,7 @@ public class Order {
     })
     @Valid
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "orderId", referencedColumnName = "id")
     private List<OrderItem> items;
 
     public Long getId() {
