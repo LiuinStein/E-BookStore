@@ -1,6 +1,5 @@
 package com.shaoqunliu.demo.estore.po;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.shaoqunliu.demo.estore.validation.groups.user.AddUser;
 import com.shaoqunliu.demo.estore.validation.groups.user.ModifyUserInfo;
 

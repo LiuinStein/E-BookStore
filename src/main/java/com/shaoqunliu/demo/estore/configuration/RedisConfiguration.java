@@ -44,17 +44,11 @@ public class RedisConfiguration {
         return redisTemplate;
     }
 
-    /**
-     * 实例化 ValueOperations 对象,可以使用 Long 操作
-     */
     @Bean
     public ValueOperations<String, RedisShoppingCart> valueOperations(RedisTemplate<String, RedisShoppingCart> redisTemplate) {
         return redisTemplate.opsForValue();
     }
 
-    /**
-     * 实例化 ListOperations 对象,可以使用 List 操作
-     */
     @Bean
     public ListOperations<String, RedisShoppingCart> listOperations(RedisTemplate<String, RedisShoppingCart> redisTemplate) {
         return redisTemplate.opsForList();

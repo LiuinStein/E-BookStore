@@ -48,6 +48,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
+        configuration.addExposedHeader("Authorization");
         configuration.addAllowedOrigin("*");
         configuration.setAllowCredentials(true);
         return configuration;
