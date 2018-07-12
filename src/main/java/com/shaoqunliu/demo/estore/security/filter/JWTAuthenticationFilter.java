@@ -1,5 +1,7 @@
 package com.shaoqunliu.demo.estore.security.filter;
 
+import com.alibaba.fastjson.JSON;
+import com.shaoqunliu.demo.estore.po.RBACUser;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -45,7 +47,8 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
                     .getSubject();
 
             if (user != null) {
-                return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+                RBACUser user1 = JSON.parseObject(user).toJavaObject(RBACUser.class);
+                return new UsernamePasswordAuthenticationToken(user1, null, user1.getAuthorities());
             }
             return null;
         }

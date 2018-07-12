@@ -59,6 +59,10 @@ public class RBACUser implements UserDetails {
         return authorities;
     }
 
+    public void setAuthorities(List<RBACRole> authorities) {
+        this.authorities = authorities;
+    }
+
     public String getPassword() {
         return password;
     }

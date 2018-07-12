@@ -1,7 +1,7 @@
 package com.shaoqunliu.demo.estore.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.shaoqunliu.demo.estore.po.OrderItem;
+import com.shaoqunliu.demo.estore.po.RBACUser;
 import com.shaoqunliu.demo.estore.po.RedisShoppingCart;
 import com.shaoqunliu.demo.estore.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +24,7 @@ public class MyShoppingCartService implements ShoppingCartService {
     }
 
     private String getCurrentUserId() {
-        String auth = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return JSON.parseObject(auth).getString("id");
+        return ((RBACUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId().toString();
     }
 
     private RedisShoppingCart getCurrentShoppingCart() {

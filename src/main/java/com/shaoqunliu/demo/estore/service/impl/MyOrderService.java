@@ -1,8 +1,8 @@
 package com.shaoqunliu.demo.estore.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.shaoqunliu.demo.estore.po.Order;
 import com.shaoqunliu.demo.estore.po.OrderItem;
+import com.shaoqunliu.demo.estore.po.RBACUser;
 import com.shaoqunliu.demo.estore.repository.OrderItemRepository;
 import com.shaoqunliu.demo.estore.repository.OrderRepository;
 import com.shaoqunliu.demo.estore.service.OrderService;
@@ -32,8 +32,7 @@ public class MyOrderService implements OrderService {
     }
 
     private String getCurrentUserId() {
-        String auth = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return JSON.parseObject(auth).getString("id");
+        return ((RBACUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId().toString();
     }
 
     @Override

@@ -25,15 +25,20 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
     public void refreshPermissions() {
         resourcePermissionMap = new HashMap<>();
         List<RBACPermission> permissions = permissionService.findAllPermissions();
-        for (RBACPermission permission : permissions) {
-            if (resourcePermissionMap.containsKey(permission.getRequest())) {
-                permission.getRoles().forEach(rbacRole -> resourcePermissionMap.get(permission.getRequest()).add(new SecurityConfig(rbacRole.getName())));
+        permissions.forEach(x -> {
+            if (resourcePermissionMap.containsKey(x.getRequest())) {
+                x.getRoles().forEach(rbacRole -> resourcePermissionMap.get(x.getRequest()).add(new SecurityConfig(rbacRole.getName())));
             } else {
                 Collection<ConfigAttribute> configs = new ArrayList<>();
-                permission.getRoles().forEach(rbacRole -> configs.add(new SecurityConfig(rbacRole.getName())));
-                resourcePermissionMap.put(permission.getRequest(), configs);
+                x.getRoles().forEach(rbacRole -> configs.add(new SecurityConfig(rbacRole.getName())));
+                resourcePermissionMap.put(x.getRequest(), configs);
             }
-        }
+        });
+        Collection<ConfigAttribute> empty = new ArrayList<>();
+        empty.add(new SecurityConfig("ROLE_NO_USER"));
+        resourcePermissionMap.entrySet().stream()
+                .filter(x -> x.getValue().isEmpty())
+                .forEach(x -> x.setValue(empty));
     }
 
     @Override
