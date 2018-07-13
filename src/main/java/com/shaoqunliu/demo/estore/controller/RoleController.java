@@ -29,4 +29,10 @@ public class RoleController {
         roleService.addRole(role);
         return new RestfulResult(0, "New role has been added.", new HashMap<>());
     }
+
+    @RequestMapping(value = "/", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteRole(@RequestBody @Validated RBACRole role) {
+        roleService.deleteRole(role);
+    }
 }

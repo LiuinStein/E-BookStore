@@ -38,4 +38,19 @@ public class MyRoleService implements RoleService {
         roleRepository.save(role);
         refreshPermissionTable();
     }
+
+    @Override
+    @Transactional(rollbackOn = {
+            Exception.class
+    })
+    public void deleteRole(RBACRole role) {
+        if (role.getId() != null) {
+            roleRepository.deleteById(role.getId());
+        } else if (role.getName() != null) {
+            roleRepository.deleteByName(role.getName());
+        } else {
+            throw new ConstraintViolationException("Cannot delete role due to the given condition is not enough.", null);
+        }
+        refreshPermissionTable();
+    }
 }

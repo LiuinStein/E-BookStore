@@ -11,8 +11,11 @@ import java.io.IOException;
 @ControllerAdvice
 public class ExceptionController {
 
-    @ExceptionHandler({ConstraintViolationException.class})
-    public void constraintViolationExceptionHandler(ConstraintViolationException ex, HttpServletResponse response) throws IOException {
+    @ExceptionHandler({
+            ConstraintViolationException.class,
+            org.hibernate.exception.ConstraintViolationException.class
+    })
+    public void constraintViolationExceptionHandler(Exception ex, HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
     }
 }
