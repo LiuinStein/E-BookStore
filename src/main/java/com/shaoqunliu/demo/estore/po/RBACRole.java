@@ -1,10 +1,12 @@
 package com.shaoqunliu.demo.estore.po;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.shaoqunliu.demo.estore.validation.groups.role.AddRole;
 import com.shaoqunliu.demo.estore.validation.groups.user.AddUser;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -17,16 +19,22 @@ public class RBACRole implements GrantedAuthority {
             AddUser.class
     })
     @JSONField(alternateNames = "role_id")
-    private Byte id;
+    private Integer id;
 
     @Size(max = 20)
+    @NotNull(groups = {
+            AddRole.class
+    })
+    @NotBlank(groups = {
+            AddRole.class
+    })
     private String name;
 
-    public Byte getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Byte id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

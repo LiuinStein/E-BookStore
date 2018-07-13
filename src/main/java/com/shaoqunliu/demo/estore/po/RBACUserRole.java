@@ -12,7 +12,7 @@ public class RBACUserRole {
 
     private Long userId;
 
-    private Byte roleId;
+    private Integer roleId;
 
     public Integer getId() {
         return id;
@@ -30,11 +30,11 @@ public class RBACUserRole {
         this.userId = userId;
     }
 
-    public Byte getRoleId() {
+    public Integer getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Byte roleId) {
+    public void setRoleId(Integer roleId) {
         this.roleId = roleId;
     }
 }
