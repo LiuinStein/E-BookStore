@@ -27,10 +27,10 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
         List<RBACPermission> permissions = permissionService.findAllPermissions();
         permissions.forEach(x -> {
             if (resourcePermissionMap.containsKey(x.getRequest())) {
-                x.getRoles().forEach(rbacRole -> resourcePermissionMap.get(x.getRequest()).add(new SecurityConfig(rbacRole.getName())));
+                x.getRoles().forEach(y -> resourcePermissionMap.get(x.getRequest()).add(new SecurityConfig(y.getName())));
             } else {
                 Collection<ConfigAttribute> configs = new ArrayList<>();
-                x.getRoles().forEach(rbacRole -> configs.add(new SecurityConfig(rbacRole.getName())));
+                x.getRoles().forEach(y -> configs.add(new SecurityConfig(y.getName())));
                 resourcePermissionMap.put(x.getRequest(), configs);
             }
         });
